@@ -42,6 +42,7 @@ export default defineConfig({
     // sourcemap: isDev,
     minify: isProduction,
     reportCompressedSize: isProduction,
+    target: 'esnext', // Ensure compatibility with BigInt literals
     rollupOptions: {
       input: {
         devtools: resolve(pagesDir, "devtools", "index.html"),
@@ -73,6 +74,9 @@ export default defineConfig({
         },
       },
     },
+  },
+  esbuild: {
+    target: 'esnext', // Ensure compatibility with BigInt literals
   },
 });
 
