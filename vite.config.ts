@@ -39,7 +39,7 @@ export default defineConfig({
   build: {
     outDir,
     /** Can slow down build speed. */
-    // sourcemap: isDev,
+    sourcemap: isDev,
     minify: isProduction,
     reportCompressedSize: isProduction,
     target: 'esnext', // Ensure compatibility with BigInt literals
@@ -80,6 +80,8 @@ export default defineConfig({
   },
   esbuild: {
     target: 'esnext', // Ensure compatibility with BigInt literals
+    jsxFactory: 'h',
+    jsxFragment: 'Fragment'
   },
 });
 
