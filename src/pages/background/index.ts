@@ -1,57 +1,42 @@
 import reloadOnUpdate from "virtual:reload-on-update-in-background-script";
-// import { SDK } from "@pioneer-sdk/sdk";
-// import { v4 as uuidv4 } from "uuid";
-reloadOnUpdate("pages/background");
+import { SDK } from "@pioneer-sdk/sdk";
 
-/**
- * Extension reloading is necessary because the browser automatically caches the css.
- * If you do not use the css of the content script, please delete it.
- */
+reloadOnUpdate("pages/background");
 reloadOnUpdate("pages/content/style.scss");
 
-console.log("background loaded");
-/*
-    Pioneer background tasks
- */
-const onStart = async function () {
-  console.log("onStart function entered"); // Added for debugging
+console.log("background loaded bro");
 
-  try {
+chrome.runtime.onInstalled.addListener(function () {
+  console.log("chrome object: ", chrome);
+  if (chrome.storage && chrome.storage.local) {
     chrome.storage.local.get(
       ["serviceKey", "queryKey", "username"],
       function (result) {
         console.log("serviceKey: ", result.serviceKey);
         console.log("queryKey: ", result.queryKey);
         console.log("username: ", result.username);
-        // Rest of your code...
       }
     );
-  } catch (e) {
-    console.error("Error caught in onStart function: ", e); // Improved error logging
+  } else {
+    console.log("chrome.storage or chrome.storage.local is not defined");
   }
-};
+});
 
 chrome.runtime.onStartup.addListener(() => {
   console.log("onStartup event fired");
-  //onStart();
+  onStart();
 });
 
-chrome.tabs.onCreated.addListener(() => {
-  console.log("onCreated event fired");
-  //onStart();
-});
+function onStart() {
+  console.log("Sending start message...");
+  chrome.runtime.sendMessage({ message: "start" }, function (response) {
+    console.log("Response from background script: ", response);
+  });
+}
 
-chrome.action.onClicked.addListener((tab) => {
-  console.log("onClicked event fired");
-  //onStart();
-});
-
-// Listen for when a tab is updated
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  console.log("onUpdated event fired");
-  // Check if the update event is fired because the page is finished loading
-  if (changeInfo.status === "complete") {
-    console.log("onUpdated event fired 2");
-    //onStart();
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  console.log("Message received in background script: ", request);
+  if (request.message === "start") {
+    sendResponse({ message: "Started" });
   }
 });

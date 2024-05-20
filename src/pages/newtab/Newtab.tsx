@@ -7,58 +7,58 @@ import "@pages/newtab/Newtab.css";
 import "@pages/newtab/Newtab.scss";
 
 const Newtab = () => {
-  const onStart = async function () {
-    try {
-      console.log("New tab opened!");
-      const serviceKey: string | null = localStorage.getItem("serviceKey"); // KeepKey api key
-      let queryKey: string | null = localStorage.getItem("queryKey");
-      let username: string | null = localStorage.getItem("username");
-      if (!queryKey) {
-        queryKey = `key:${uuidv4()}`;
-        localStorage.setItem("queryKey", queryKey);
-      }
-      if (!username) {
-        username = `user:${uuidv4()}`;
-        username = username.substring(0, 13);
-        localStorage.setItem("username", username);
-      }
-
-      const blockchains = [
-        "bitcoin",
-        "ethereum",
-        "thorchain",
-        "bitcoincash",
-        "litecoin",
-        "binance",
-        "cosmos",
-        "dogecoin",
-      ];
-
-      // add custom paths
-      const paths: any = [];
-      // const spec = "https://pioneers.dev/spec/swagger.json";
-      // const wss = "wss://pioneers.dev";
-      const spec = "http://127.0.0.1:9001/spec/swagger.json";
-      const wss = "ws://127.0.0.1:9001";
-      const configPioneer: any = {
-        blockchains,
-        username,
-        queryKey,
-        spec,
-        wss,
-        paths,
-      };
-      console.log(configPioneer);
-      const appInit = new SDK(spec, configPioneer);
-      console.log(appInit);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-  // onStart()
-  useEffect(() => {
-    onStart();
-  }, []); // once on startup
+  // const onStart = async function () {
+  //   try {
+  //     console.log("New tab opened!");
+  //     const serviceKey: string | null = localStorage.getItem("serviceKey"); // KeepKey api key
+  //     let queryKey: string | null = localStorage.getItem("queryKey");
+  //     let username: string | null = localStorage.getItem("username");
+  //     if (!queryKey) {
+  //       queryKey = `key:${uuidv4()}`;
+  //       localStorage.setItem("queryKey", queryKey);
+  //     }
+  //     if (!username) {
+  //       username = `user:${uuidv4()}`;
+  //       username = username.substring(0, 13);
+  //       localStorage.setItem("username", username);
+  //     }
+  //
+  //     const blockchains = [
+  //       "bitcoin",
+  //       "ethereum",
+  //       "thorchain",
+  //       "bitcoincash",
+  //       "litecoin",
+  //       "binance",
+  //       "cosmos",
+  //       "dogecoin",
+  //     ];
+  //
+  //     // add custom paths
+  //     const paths: any = [];
+  //     // const spec = "https://pioneers.dev/spec/swagger.json";
+  //     // const wss = "wss://pioneers.dev";
+  //     const spec = "http://127.0.0.1:9001/spec/swagger.json";
+  //     const wss = "ws://127.0.0.1:9001";
+  //     const configPioneer: any = {
+  //       blockchains,
+  //       username,
+  //       queryKey,
+  //       spec,
+  //       wss,
+  //       paths,
+  //     };
+  //     console.log(configPioneer);
+  //     const appInit = new SDK(spec, configPioneer);
+  //     console.log(appInit);
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // };
+  // // onStart()
+  // useEffect(() => {
+  //   onStart();
+  // }, []); // once on startup
   return (
     <div className="App">
       <header className="App-header">
