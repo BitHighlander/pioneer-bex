@@ -38,7 +38,7 @@ export default defineConfig({
   publicDir,
   build: {
     outDir,
-    /** Can slowDown build speed. */
+    /** Can slow down build speed. */
     // sourcemap: isDev,
     minify: isProduction,
     reportCompressedSize: isProduction,
@@ -75,6 +75,9 @@ export default defineConfig({
       },
     },
   },
+  define: {
+    'process.env': {},
+  },
   esbuild: {
     target: 'esnext', // Ensure compatibility with BigInt literals
   },
@@ -91,6 +94,6 @@ function regenerateCacheInvalidationKey() {
   return cacheInvalidationKey;
 }
 
-function generateKey(): string {
+function generateKey() {
   return `${(Date.now() / 100).toFixed()}`;
 }
